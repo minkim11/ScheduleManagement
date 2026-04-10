@@ -54,4 +54,18 @@ public class ScheduleService {
                     schedule.getModifiedAt()))
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public ReadScheduleResponse readOneSchedule(Long scheduleId) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new IllegalStateException("존재하지 않는 일정")
+        );
+        return new ReadScheduleResponse(
+                schedule.getScheduleName(),
+                schedule.getScheduleId(),
+                schedule.getDescription(),
+                schedule.getUserName(),
+                schedule.getCreatedAt(),
+                schedule.getModifiedAt());
+    }
 }

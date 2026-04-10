@@ -30,4 +30,11 @@ public class ScheduleController {
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.readAllSchedules(userName));
     }
+
+    @GetMapping("/schedules/{scheduleId}")
+    public ResponseEntity<ReadScheduleResponse> readOneSchedule(
+            @PathVariable Long scheduleId
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.readOneSchedule(scheduleId));
+    }
 }
