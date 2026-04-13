@@ -1,6 +1,7 @@
 package com.example.schedulemanagement.dto;
 
 import com.example.schedulemanagement.entity.Comment;
+import lombok.AccessLevel;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

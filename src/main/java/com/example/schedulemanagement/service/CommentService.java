@@ -28,7 +28,7 @@ public class CommentService {
         if (commentRepository.countByScheduleId(scheduleId) >= 10) {
             throw new IllegalStateException("해당 일정 댓글 10개");
         }
-        // 요청 바디로 댓글 객체 생성
+        // 요청 dto로 댓글 객체 생성
         Comment comment = new Comment(
                 request.getComment(),
                 request.getUserName(),
@@ -38,7 +38,7 @@ public class CommentService {
         // 댓글 DB에 저장
         Comment savedComment = commentRepository.save(comment);
 
-        // 저장된 댓글로 응답 객체 생성 후 반환
+        // 저장된 댓글로 응답 dto 생성 후 반환
         return new CreateCommentResponse(
                 savedComment.getCommentId(),
                 savedComment.getComment(),

@@ -46,7 +46,14 @@ public class ScheduleController {
             @PathVariable Long scheduleId,
             @RequestBody UpdateScheduleRequest request
     ) {
-        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.updateSchedule(scheduleId, request));
+        // 비밀번호 오류시 404
+        UpdateScheduleResponse updateScheduleResponse;
+        try {
+            updateScheduleResponse = scheduleService.updateSchedule(scheduleId, request);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(updateScheduleResponse);
     }
 
     // 일정 삭제
@@ -55,7 +62,12 @@ public class ScheduleController {
             @PathVariable Long scheduleId,
             @RequestBody DeleteScheduleRequest request
     ) {
-        scheduleService.deleteSchedule(scheduleId, request);
+        // 비밀번호 오류시 404
+        try {
+            scheduleService.deleteSchedule(scheduleId, request);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
