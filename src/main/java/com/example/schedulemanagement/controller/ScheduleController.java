@@ -34,7 +34,7 @@ public class ScheduleController {
 
     // 일정 선택 조회
     @GetMapping("/schedules/{scheduleId}")
-    public ResponseEntity<ReadScheduleResponse> readOneSchedule(
+    public ResponseEntity<ReadOneScheduleResponse> readOneSchedule(
             @PathVariable Long scheduleId
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.readOneSchedule(scheduleId));
