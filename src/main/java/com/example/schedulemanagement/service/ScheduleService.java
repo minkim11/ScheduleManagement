@@ -1,7 +1,9 @@
 package com.example.schedulemanagement.service;
 
 import com.example.schedulemanagement.dto.*;
+import com.example.schedulemanagement.entity.Comment;
 import com.example.schedulemanagement.entity.Schedule;
+import com.example.schedulemanagement.repository.CommentRepository;
 import com.example.schedulemanagement.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -15,6 +17,7 @@ import java.util.List;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final CommentRepository commentRepository;
 
     // 일정 생성
     @Transactional
@@ -62,19 +65,23 @@ public class ScheduleService {
 
     // 일정 선택 조회
     @Transactional(readOnly = true)
-    public ReadScheduleResponse readOneSchedule(Long scheduleId) {
+    public ReadOneScheduleResponse readOneSchedule(Long scheduleId) {
         // 1. 경로 변수에 따라 일정 가져옴
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalStateException("존재하지 않는 일정")
         );
-        // 2. 응답 바디 생성 후 반환
-        return new ReadScheduleResponse(
+        // 2. 일정 id에 맞는 댓글 목록 가져옴
+        List<Comment> comments = commentRepository.findAllByScheduleId(scheduleId);
+        // 3. 응답 바디 생성 후 반환
+        return new ReadOneScheduleResponse(
                 schedule.getScheduleName(),
                 schedule.getScheduleId(),
                 schedule.getDescription(),
                 schedule.getUserName(),
                 schedule.getCreatedAt(),
-                schedule.getModifiedAt());
+                schedule.getModifiedAt(),
+                comments
+                );
     }
 
     // 일정 수정
