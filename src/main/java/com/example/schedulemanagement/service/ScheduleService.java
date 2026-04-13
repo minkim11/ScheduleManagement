@@ -22,7 +22,7 @@ public class ScheduleService {
     // 일정 생성
     @Transactional
     public CreateScheduleResponse createSchedule(CreateScheduleRequest request) {
-        // 1. 요청 바디의 데이터로 객체 생성
+        // 1. 요청 dto의 데이터로 객체 생성
         Schedule schedule = new Schedule(
                 request.getScheduleName(),
                 request.getDescription(),
@@ -30,7 +30,7 @@ public class ScheduleService {
                 request.getPassword());
         // 2. 생성한 객체 DB에 저장
         Schedule savedSchedule = scheduleRepository.save(schedule);
-        // 3. 저장한 객체 데이터로 응답 바디 생성 후 반환
+        // 3. 저장한 객체 데이터로 응답 dto 생성 후 반환
         return new CreateScheduleResponse(
                 savedSchedule.getScheduleId(),
                 savedSchedule.getScheduleName(),
@@ -51,7 +51,7 @@ public class ScheduleService {
         } else {
             schedules = scheduleRepository.findAllByUserName(userName, Sort.by("modifiedAt").descending());
         }
-        // 2. 응답 바디 목록 생성 후 반환
+        // 2. 응답 dto 목록 생성 후 반환
         return schedules.stream()
                 .map(schedule -> new ReadScheduleResponse(
                     schedule.getScheduleName(),
@@ -72,7 +72,7 @@ public class ScheduleService {
         );
         // 2. 일정 id에 맞는 댓글 목록 가져옴
         List<Comment> comments = commentRepository.findAllByScheduleId(scheduleId);
-        // 3. 응답 바디 생성 후 반환
+        // 3. 응답 dto 생성 후 반환
         return new ReadOneScheduleResponse(
                 schedule.getScheduleName(),
                 schedule.getScheduleId(),
@@ -86,16 +86,18 @@ public class ScheduleService {
 
     // 일정 수정
     @Transactional
-    public UpdateScheduleResponse updateSchedule(Long scheduleId, UpdateScheduleRequest request) {
+    public UpdateScheduleResponse updateSchedule(Long scheduleId, UpdateScheduleRequest request) throws IllegalStateException {
         // 1. 경로 변수에 따라 일정 가져옴
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalStateException("존재하지 않는 일정")
         );
-        // 2. 요청 바디의 비밀번호와 DB의 비밀번호 일치 시 수정
+        // 2. 요청 dto의 비밀번호와 DB의 비밀번호 일치 시 수정
         if (request.getPassword().equals(schedule.getPassword())) {
             schedule.updateSchedule(request.getScheduleName(), request.getUserName(), request.getPassword());
+        } else {
+            throw new IllegalStateException("패스워드 오류");
         }
-        // 3. 수정한 객체 응답 바디 생성 후 반환
+        // 3. 수정한 객체 응답 dto 생성 후 반환
         return new UpdateScheduleResponse(
                 schedule.getUserName(),
                 schedule.getScheduleId(),
@@ -106,7 +108,7 @@ public class ScheduleService {
 
     // 일정 삭제
     @Transactional
-    public void deleteSchedule(Long scheduleId, DeleteScheduleRequest request) {
+    public void deleteSchedule(Long scheduleId, DeleteScheduleRequest request) throws IllegalStateException {
         // 1. 경로 변수 일정 가져옴
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
                 () -> new IllegalStateException("존재하지 않는 일정")
@@ -114,6 +116,8 @@ public class ScheduleService {
         // 2. 비밀번호 맞을 경우 삭제
         if (request.getPassword().equals(schedule.getPassword())) {
             scheduleRepository.deleteById(scheduleId);
+        } else {
+            throw new IllegalStateException("패스워드 오류");
         }
     }
 }
