@@ -263,21 +263,21 @@ Three Layer Architecture
 <img src="img/postSchedule.png" alt="">
 
 ### 일정 조회
-전체 조회
-<img src="img/getSchedule1.png" alt="">
-<img src="img/getSchedule3.png" alt="">
-선택 조회
-<img src="img/getSchedule2.png" alt="">
+전체 조회  
+<img src="img/getSchedule1.png" alt="">  
+<img src="img/getSchedule3.png" alt="">  
+선택 조회  
+<img src="img/getSchedule2.png" alt="">  
 
 ### 일정 수정
-비밀번호 오류시
-<img src="img/patchSchedule1.png" alt="">
-비밀번호 일치시
-<img src="img/patchSchedule2.png" alt="">
+비밀번호 오류시  
+<img src="img/patchSchedule1.png" alt="">  
+비밀번호 일치시  
+<img src="img/patchSchedule2.png" alt="">  
 
 ### 댓글 생성 및 일정 선택 조회
-<img src="img/postComment.png" alt="">
-일정 선택 조회 시 댓글 포함
+<img src="img/postComment.png" alt="">  
+일정 선택 조회 시 댓글 포함  
 <img src="img/getOneSchedule.png" alt="">
 
 ## 결과
