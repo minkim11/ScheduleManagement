@@ -4,6 +4,16 @@
 스프링을 사용해 일정, 댓글 CRUD 구현  
 의존성: Lombok, spring Web, mySQL driver, spring data JPA  
 
+## 과제 질문
+### 1. 3 Layer Architecture(Controller, Service, Repository)를 적절히 적용했는지 확인해 보고, 왜 이러한 구조가 필요한지 작성해 주세요.  
+- 3개의 계층으로 분리하여 개발 최적화, 프로젝트 관리에 용이
+- 계층별 변경사항에 영향이 적음  
+  유지보수성 up  
+  확장성, 재사용성 up  
+### 2. `@RequestParam`, `@PathVariable`, `@RequestBody`가 각각 어떤 어노테이션인지, 어떤 특징을 갖고 있는지 작성해 주세요.  
+- RequestParam: URL의 ?뒤에 오는 키와 값을 가진 변수를 처리, 정렬과 페이징, 검색에 주로 사용, 민감한 정보는 피하는 것이 좋다.
+- PathVariable: URL 경로의 일부를 변수로 받아 사용, {id} 등 단일 객체에 사용
+- RequestBody: 요청받은 json 데이터를 자바 객체로 변환하여 사용
 ## ERD
 <img src="img/ERD.png" alt="">
 
