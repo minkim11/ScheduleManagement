@@ -259,7 +259,7 @@ DELETE /schedules/{scheduleId}
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|none|Inline|
 
 ## 프로젝트 구조
-Three Layer Architecture
+Three Layer Architecture  
 <img src="img/project.png" alt="">
 
 ## 기능
